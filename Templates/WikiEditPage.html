@@ -6,33 +6,32 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="/styles/BlogCSS.css" />
+        <link type="text/css" rel="stylesheet" href="/styles/WikiCSS.css" />
         <title>UdaWiki</title>
         <meta charset="windows-1252">
         <meta name="viewport" content="width=device-width">
     </head>
     
     <body>
-        <a href="/blog" class="main-title">
-            Cherry's Wiki Quicky
-        </a>
-        <div class="login-area">
-            <div class ="login-link">Hi {{user}}!</div> | 
-            <a class ="login-link" href="/logout">Logout</a>
-        </div>
-        <div class ="newpost-area">
-            <a class ="newpost-link" href="/newpost">Edit</a>
-        </div>
-        <div id="content">
-            <div class="post-content">
-                <textarea name="content">{{post.content.replace('\n', '<br>') | safe}}</textarea>
+        <form method="post">
+            <a href="/blog" class="main-title">
+                Edit Page
+            </a>
+            <div class="login-area">
+                <div class ="login-link">Hi {{user}}!</div> | 
+                <a class ="login-link" href="/logout">Logout</a>
             </div>
-        </div>
-        <br>
-        <input type="submit">
-        <div class="age">
-            Queried {{last_queried_time}} seconds ago.
-        </div>
+            <div id="content">
+                <div class="post-content">
+                    <textarea name="content">{% if post %}{{post.content.replace('\n', '<br>') | safe}}{% endif %}</textarea>
+                </div>
+            </div>
+            <br>
+            <input type="submit">
+            <div class="age">
+                Queried {{last_queried_time}} seconds ago.
+            </div>
+        </form>
     </body>
     
     

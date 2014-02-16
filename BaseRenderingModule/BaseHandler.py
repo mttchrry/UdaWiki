@@ -10,6 +10,7 @@ import hashlib
 #from Blog.Blog import User
 from google.appengine.api import users
 from google.appengine.ext import db
+from google.appengine.api import memcache
 
 def create_cookie_hash(username, password, salt=""):
     if len(salt) == 0:
@@ -44,10 +45,15 @@ class BaseHandler(webapp2.RequestHandler):
         userCookie = self.request.cookies.get('user_id')
         if userCookie:
             user_id, hash_val = userCookie.split("|")
-            users = db.GqlQuery("SELECT * FROM User WHERE __key__ = KEY('User', %s)" % int(user_id))
-            if users:
-                if valid_pw(users[0].username, users[0].password, hash_val):
-                    return user_id 
+            user = memcache.get(user_id)
+            if user is None:
+                users = db.GqlQuery("SELECT * FROM User WHERE __key__ = KEY('User', %s)" % int(user_id))
+                if users:
+                    user = users[0]
+                    memcache.add(user_id, user)
+            if user:
+                if valid_pw(user.username, user.password, hash_val):
+                    return user.username
                 else: 
                     return none
    

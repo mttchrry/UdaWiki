@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <link type="text/css" rel="stylesheet" href="/styles/BlogCSS.css" />
+        <link type="text/css" rel="stylesheet" href="/styles/WikiCSS.css" />
         <title>Blog</title>
         <meta charset="windows-1252">
         <meta name="viewport" content="width=device-width">
@@ -27,34 +27,17 @@ and open the template in the editor.
             <a class ="login-link" href="/logout">Logout</a>
         </div>
         <div class ="newpost-area">
-            <a class ="newpost-link" href="/newpost">Edit</a>
+            <a class ="newpost-link" href="/_edit/">Edit</a>
         </div>
         {% endif %}
         <div id="content">
-        {% if not edit%}
-            <div class="post">
-                <div class="post-heading">
-                    <a href="/blog/{{post.key().id()}}" class ="post-title">
-                        {{post.subject}}
-                    </a>
-                    <div class="post-date">
-                        {{post.created.strftime("%b %d, %Y - %H:%M")}}
-                    </div>
-                </div>
+            {% if post %}
+            <div class="post">           
                 <div class="post-content">
                     {{post.content.replace('\n', '<br>') | safe}}
                 </div>
             </div>
-        {% else %}
-            <div class="post">
-                <div class="post-heading">
-                    <input type="text" name="subject" value="{{title}}">
-                </div>
-            </div>
-            <div class="post-content">
-                <textarea name="content">{{post.content.replace('\n', '<br>') | safe}}</textarea>
-            </div>
-        {% endif %}
+            {% endif %}
         </div>
         <br>
         <div class="age">
