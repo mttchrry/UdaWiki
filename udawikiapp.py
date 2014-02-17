@@ -12,7 +12,7 @@ from Wikis.Wiki import WikiEdit
 
 PAGE_RE = r'(/(?:[a-zA-Z0-9_-]+/?)*)'
 app = webapp2.WSGIApplication([
-    ('/', Wiki),
+    ('/?', Wiki),
     ('/signup', SignUpPage),
     ('/login', Login),
     ('/logout', Logout),
